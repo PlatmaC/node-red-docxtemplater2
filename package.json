@@ -1,5 +1,5 @@
 {
-  "name": "node-red-docxtemplater2",
+  "name": "@platmac/node-red-docxtemplater2",
   "version": "1.0.1",
   "author": "Hooke Jr. <platma@platma.com>",
   "description": "Generate docx, pptx, and xlsx from templates (Word, Powerpoint and Excel documents), from Node-Red using file from url or buffer",
