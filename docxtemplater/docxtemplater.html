@@ -1,36 +1,62 @@
 <script type="text/javascript">
-    RED.nodes.registerType('docxtemplater', {
+    RED.nodes.registerType('docxtemplater2', {
         category: 'function',
         color: '#a6bbcf',
         defaults: {
             name: { value: "" },
             templateDocx: { value: "" },
-            outFile: { value: "" }
+            outputType: { value: "base64"},
+            inputType: { value: "url"},
         },
         inputs: 1,
         outputs: 1,
         icon: "font-awesome/fa-file-word-o",
         label: function () {
-            return this.name || "docxtemplater";
+            return this.name || "docxtemplater2";
+        },
+        oneditprepare: function () {
+            $("#node-input-outputType").append($("<option></option>").attr("value", "base64").text("base64"));;
+            $("#node-input-outputType").append($("<option></option>").attr("value", "nodebuffer").text("Buffer"));;
+
+            $("#node-input-inputType").append($("<option></option>").attr("value", "url").text("url"));;
+            $("#node-input-inputType").append($("<option></option>").attr("value", "nodebuffer").text("Buffer"));;
+            
+            $("#node-input-outputType").val(config.outputType);
+
+ 
+            $("#node-input-inputType").val(config.inputType);
+        },
+        oneditsave: function () {
+            this.outputType = $("#node-input-outputType").children("option:selected").val();
+            this.inputType = $("#node-input-inputType").children("option:selected").val();
         }
     });
 </script>
 
-<script type="text/html" data-template-name="docxtemplater">
+<script type="text/html" data-template-name="docxtemplater2">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name" />
       </div>
 
       <div class="form-row">
-        <label for="node-input-output"><i class="fa fa-print"></i> Template(Docx)</label>
+        <label for="node-input-inputType"><i class="fa fa-sign-out"></i>Input type</label>
+        <select id="node-input-inputType"></select>
+    </div>
+
+      <div class="form-row">
+        <label for="node-input-templateDocx"><i class="fa fa-print"></i> Template(Docx)</label>
         <input type="text" id="node-input-templateDocx" placeholder="TemplateDocx" />
-        <label for="node-input-output"><i class="fa fa-file"></i> Outfile</label>
-        <input type="text" id="node-input-outFile" placeholder="Outfile" />
       </div>
+
+      <div class="form-row">
+        <label for="node-input-outputType"><i class="fa fa-sign-out"></i>Output type</label>
+        <select id="node-input-outputType"></select>
+    </div>
+
 </script>
 
-<script type="text/markdow" data-help-name="docxtemplater">
+<script type="text/markdow" data-help-name="docxtemplater2">
 Docxtemplater node generates a new Word document by filling the template created in Word with metadata from `msg.payload`.
 
 The metadata is taken from the `msg.payload` object.

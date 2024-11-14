@@ -1,20 +1,16 @@
 {
-  "name": "node-red-contrib-docxtemplater",
-  "version": "1.0.10",
-  "author": "Ömer Kaptan",
-  "description": "Generate docx, pptx, and xlsx from templates (Word, Powerpoint and Excel documents), from Node-Red",
-  "contributors": [
-    {
-      "name": "Ömer Kaptan"
-    }
-  ],
+  "name": "node-red-docxtemplater2",
+  "version": "1.0.1",
+  "author": "Hooke Jr. <platma@platma.com>",
+  "description": "Generate docx, pptx, and xlsx from templates (Word, Powerpoint and Excel documents), from Node-Red using file from url or buffer",
+
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/omerkaptan/node-red-contrib-docxtemplater.git"
+    "url": "https://github.com/PlatmaC/node-red-docxtemplater2.git"
   },
   "node-red": {
     "nodes": {
-      "docxtemplater": "docxtemplater/docxtemplater.js"
+      "docxtemplater2": "docxtemplater/docxtemplater.js"
     }
   },
   "keywords": [
@@ -40,13 +36,10 @@
     "node-red"
   ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/omerkaptan/node-red-contrib-docxtemplater/issues"
-  },
-  "homepage": "https://github.com/omerkaptan/node-red-contrib-docxtemplater#readme",
   "dependencies": {
+    "angular-expressions": "^1.2.1",
+    "axios": "^1.7.7",
     "docxtemplater": "^3.34.3",
-    "pizzip": "^3.1.4",
-    "angular-expressions": "^1.2.1"
+    "pizzip": "^3.1.4"
   }
 }

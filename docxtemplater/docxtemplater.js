@@ -1,14 +1,21 @@
+const axios = require('axios');
 const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
-const fs = require("fs");
-const path = require("path");
-const { promisify } = require("util");
 
-const convertTemplate = async ({ templateDocx, parameters, outFile }) => {
-  const content = await promisify(fs.readFile)(
-    path.resolve(__dirname, templateDocx),
-    "binary"
-  );
+const convertTemplate = async ({ templateDocx, parameters, outputType, inputType }) => {
+  let content;
+  if (inputType==="nodebuffer"){
+  content = templateDocx;
+  } else if (inputType==="url"){
+    content= await axios({
+      method: 'get',
+      url: templateDocx,
+      responseType:"arraybuffer"
+      });
+      content = content.data;
+  }
+  content=content.toString('binary');
+
   const zip = new PizZip(content);
   const expressionParser = require('docxtemplater/expressions.js');
   const doc = new Docxtemplater(zip, {
@@ -18,28 +25,28 @@ const convertTemplate = async ({ templateDocx, parameters, outFile }) => {
   });
   doc.render(parameters);
   const buf = doc.getZip().generate({
-    type: "nodebuffer",
+    type: outputType,
     compression: "DEFLATE",
   });
-  if (!outFile) return buf;
-  await promisify(fs.writeFile)(path.resolve(__dirname, outFile), buf);
-  return outFile;
+   return buf;
 };
 
 module.exports = function (RED) {
-  function docxtemplater(config) {
+  function docxtemplater2(config) {
     RED.nodes.createNode(this, config);
     const node = this;
 
     node.on("input", async function (msg) {
       const templateDocx = config.templateDocx || msg.templateDocx;
-      const outFile = config.outFile || msg.outFile;
+      const inputType = config.inputType || msg.inputType;
+      const outputType = config.outputType || msg.outputType;
       const parameters = msg.payload || {};
       try {
         const convertedTemplate = await convertTemplate({
           templateDocx,
           parameters,
-          outFile,
+          outputType,
+          inputType
         });
         msg.payload = convertedTemplate;
         node.send(msg);
@@ -48,5 +55,5 @@ module.exports = function (RED) {
       }
     });
   }
-  RED.nodes.registerType("docxtemplater", docxtemplater);
+  RED.nodes.registerType("docxtemplater2", docxtemplater2);
 };
