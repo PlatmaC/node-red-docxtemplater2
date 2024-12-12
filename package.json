@@ -1,16 +1,16 @@
 {
   "name": "@platmac/node-red-docxtemplater2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Hooke Jr. <platma@platma.com>",
   "description": "Generate docx, pptx, and xlsx from templates (Word, Powerpoint and Excel documents), from Node-Red using file from url or buffer",
-
   "repository": {
     "type": "git",
     "url": "https://github.com/PlatmaC/node-red-docxtemplater2.git"
   },
   "node-red": {
     "nodes": {
-      "docxtemplater2": "docxtemplater/docxtemplater.js"
+      "docxtemplateeditor": "docxtemplateeditor/docxtemplateeditor.js",
+      "docxtopdf": "docxtopdf/docxtopdf.js"
     }
   },
   "keywords": [
@@ -40,6 +40,8 @@
     "angular-expressions": "^1.2.1",
     "axios": "^1.7.7",
     "docxtemplater": "^3.34.3",
-    "pizzip": "^3.1.4"
+    "libreoffice-convert": "^1.6.0",
+    "pizzip": "^3.1.4",
+    "util": "^0.12.5"
   }
 }

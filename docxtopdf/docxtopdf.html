@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('docxtopdf', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            docx: { value: "" },
+            outputType: { value: "nodebuffer"},
+            inputType: { value: "url"},
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-file-word-o",
+        label: function () {
+            return this.name || "docxtopdf";
+        },
+        oneditprepare: function () {
+        
+        },
+        oneditsave: function () {
+            this.outputType = $("#node-input-outputType").children("option:selected").val();
+            this.inputType = $("#node-input-inputType").children("option:selected").val();
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="docxtopdf">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name" />
+      </div>
+
+      <div class="form-row">
+        <label for="node-input-inputType"><i class="fa fa-sign-out"></i>Input type</label>
+        <select id="node-input-inputType">
+            <option value="url">URL</option>
+            <option value="nodebuffer">Buffer</option>
+        </select>
+    </div>
+
+      <div class="form-row">
+        <label for="node-input-docx"><i class="fa fa-print"></i> docx</label>
+        <input type="text" id="node-input-docx" placeholder="docx" />
+      </div>
+
+      <div class="form-row">
+        <label for="node-input-outputType"><i class="fa fa-sign-out"></i>Output type</label>
+        <select id="node-input-outputType">
+            <option value="base64">Base64</option>
+            <option value="nodebuffer">Buffer</option>
+        </select>
+    </div>
+
+</script>
+
+<script type="text/markdow" data-help-name="docxtopdf">
+Docxtemplater node converts a docx file to pdf oge.
+
+The URL to the Word file or the file as a Buffer can be provided by filling the docx field within the node or by using `msg.docx`.
+</script>

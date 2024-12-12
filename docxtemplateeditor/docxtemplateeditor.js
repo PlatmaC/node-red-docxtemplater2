@@ -32,7 +32,7 @@ const convertTemplate = async ({ templateDocx, parameters, outputType, inputType
 };
 
 module.exports = function (RED) {
-  function docxtemplater2(config) {
+  function docxtemplateeditor(config) {
     RED.nodes.createNode(this, config);
     const node = this;
 
@@ -55,5 +55,5 @@ module.exports = function (RED) {
       }
     });
   }
-  RED.nodes.registerType("docxtemplater2", docxtemplater2);
+  RED.nodes.registerType("docxtemplateeditor", docxtemplateeditor);
 };
