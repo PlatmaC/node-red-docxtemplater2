@@ -1,6 +1,6 @@
 {
   "name": "@platmac/node-red-docxtemplater2",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Hooke Jr. <platma@platma.com>",
   "description": "Generate docx, pptx, and xlsx from templates (Word, Powerpoint and Excel documents), from Node-Red using file from url or buffer",
   "repository": {

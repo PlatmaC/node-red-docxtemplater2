@@ -17,13 +17,17 @@ const convertTemplate = async ({ docx, outputType, inputType }) => {
       content = content.data;
   }
 
-  let res = await libre.convertAsync(content, "pdf", '')
-  
+  let res;
+  try{
+      res = await libre.convertAsync(content, "pdf", '')
+  } catch (error){
+    return({error, res:null});
+  }
   if (outputType==="base64"){
    res = Buffer.from(res).toString('base64');
     }
 
-  return res;
+  return ({res, error:null});
 };
 
 module.exports = function (RED) {
@@ -32,17 +36,20 @@ module.exports = function (RED) {
     const node = this;
 
     node.on("input", async function (msg) {
-      const docx = config.docx || msg.docx;
+      const docx = config.docx || msg.payload;
       const inputType = config.inputType || msg.inputType;
       const outputType = config.outputType || msg.outputType;
       try {
-        const convertedDocx = await convertTemplate({
+        const {res, error} = await convertTemplate({
           docx,
           outputType,
           inputType
         });
-        msg.payload = convertedDocx;
-        node.send(msg);
+        if (error){
+          node.error(error);
+        } else {
+        msg.payload = res;
+        node.send(msg); }
       } catch (error) {
         node.error(error);
       }
